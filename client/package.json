@@ -23,6 +23,7 @@
     "vite": "^5.3.3"
   },
   "dependencies": {
+    "dotenv": "^16.4.5",
     "animate.css": "^4.1.1",
     "bulma-toast": "^2.4.4",
     "js-confetti": "^0.12.0",

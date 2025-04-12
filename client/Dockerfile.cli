@@ -13,6 +13,7 @@ RUN npm i
 # Copie du code dans le conteneur
 COPY . .
 
+
 # On lance la construction de l'application
 RUN npm run build
 
