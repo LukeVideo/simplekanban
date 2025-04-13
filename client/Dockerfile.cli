@@ -13,6 +13,11 @@ RUN npm i
 # Copie du code dans le conteneur
 COPY . .
 
+# Accept the build-time argument
+ARG VITE_API_BASE_URL
+
+# Create .env file for Vite and debug
+RUN touch .env && echo "VITE_API_BASE_URL=$VITE_API_BASE_URL" > .env && cat .env
 
 # On lance la construction de l'application
 RUN npm run build
