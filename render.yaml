@@ -1,23 +1,9 @@
 databases:
-  - name: okanban-db
+  - name: okanban-db-managed
     databaseName: okanban
     user: okanban
 
 services:
-  - type: pserv
-    name: okanban-db
-    runtime: image
-    plan: free
-    image:
-      url: docker.io/lukevideo/okanban-db:latest
-    envVars:
-      - key: POSTGRES_USER
-        value: okanban
-      - key: POSTGRES_DB
-        value: okanban
-      - key: POSTGRES_PASSWORD
-        sync: false
-
   - type: web
     name: okanban-api
     runtime: image
@@ -28,7 +14,7 @@ services:
     envVars:
       - key: DATABASE_URL
         fromDatabase:
-          name: okanban-db
+          name: okanban-db-managed
           property: connectionString
       - key: NODE_ENV
         value: production

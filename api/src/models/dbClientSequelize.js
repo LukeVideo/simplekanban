@@ -31,7 +31,7 @@ export const sequelize = new Sequelize(process.env.DATABASE_URL, {
   logging: process.env.DEBUG?.includes("sequelize") ? console.log : false,
 });
 
-// Initialize database schema
+// Initialize and populate database
 async function initializeDatabase() {
   try {
     // Test connection
@@ -39,12 +39,18 @@ async function initializeDatabase() {
     console.log("Database connection established");
 
     // Load and execute create_tables.sql
-    const sqlPath = path.join(__dirname, "..", "data", "create_tables.sql");
-    const sql = await fs.readFile(sqlPath, "utf-8");
-    await sequelize.query(sql, { raw: true });
+    const createSqlPath = path.join(__dirname, "..", "data", "create_tables.sql");
+    const createSql = await fs.readFile(createSqlPath, "utf-8");
+    await sequelize.query(createSql, { raw: true });
     console.log("Database schema initialized");
 
-    // Optional: Sync models (if using Sequelize models)
+    // Load and execute populate_tables.sql
+    const populateSqlPath = path.join(__dirname, "..", "data", "populate_tables.sql");
+    const populateSql = await fs.readFile(populateSqlPath, "utf-8");
+    await sequelize.query(populateSql, { raw: true });
+    console.log("Database populated with initial data");
+
+    // Sync Sequelize models (non-destructive)
     await sequelize.sync({ force: false });
     console.log("Models synchronized");
   } catch (error) {
