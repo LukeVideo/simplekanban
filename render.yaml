@@ -21,6 +21,10 @@ services:
       url: docker.io/lukevideo/okanban-api:latest
     healthCheckPath: /api/lists
     envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: okanban-db
+          property: connectionString
       - key: NODE_ENV
         value: production
       - key: DB_PORT
