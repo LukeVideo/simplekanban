@@ -1,0 +1,33 @@
+services:
+  - type: web
+    name: okanban-nginx
+    env: docker
+    plan: free
+    dockerCommand: docker-compose -f docker-compose.prod.yml up nginx
+    repo: https://github.com/LukeVideo/simplekanban
+    branch: release
+    healthCheckPath: /
+
+  - type: pserv
+    name: okanban-api
+    env: docker
+    plan: free
+    dockerCommand: docker-compose -f docker-compose.prod.yml up api
+    repo: https://github.com/LukeVideo/simplekanban
+    branch: release
+
+  - type: pserv
+    name: okanban-client
+    env: docker
+    plan: free
+    dockerCommand: docker-compose -f docker-compose.prod.yml up client
+    repo: https://github.com/LukeVideo/simplekanban
+    branch: release
+
+  - type: pserv
+    name: okanban-db
+    env: docker
+    plan: free
+    dockerCommand: docker-compose -f docker-compose.prod.yml up db
+    repo: https://github.com/LukeVideo/simplekanban
+    branch: release
