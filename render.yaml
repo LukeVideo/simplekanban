@@ -1,7 +1,7 @@
 services:
   - type: web
     name: okanban-nginx
-    env: docker
+    runtime: docker
     repo: https://github.com/LukeVideo/simplekanban
     branch: release
     plan: free
@@ -14,7 +14,7 @@ services:
 
   - type: web
     name: okanban-api
-    env: docker
+    runtime: docker
     repo: https://github.com/LukeVideo/simplekanban
     branch: release
     plan: free
@@ -31,7 +31,7 @@ services:
 
   - type: web
     name: okanban-db
-    env: docker
+    runtime: docker
     repo: https://github.com/LukeVideo/simplekanban
     branch: release
     plan: free
