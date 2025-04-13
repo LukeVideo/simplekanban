@@ -1,11 +1,12 @@
-uild new ones on Rendservices:
+services:
   - type: web
     name: okanban-nginx
     env: docker
     repo: https://github.com/LukeVideo/simplekanban
     branch: release
     plan: free
-    dockerCommand: docker run lukevideo/okanban-nginx:latest
+    image:
+      url: docker.io/lukevideo/okanban-nginx:latest
     healthCheckPath: /
     envVars:
       - key: NGINX_PORT
@@ -17,7 +18,8 @@ uild new ones on Rendservices:
     repo: https://github.com/LukeVideo/simplekanban
     branch: release
     plan: free
-    dockerCommand: docker run lukevideo/okanban-api:latest
+    image:
+      url: docker.io/lukevideo/okanban-api:latest
     healthCheckPath: /api/lists
     envVars:
       - key: NODE_ENV
@@ -33,7 +35,8 @@ uild new ones on Rendservices:
     repo: https://github.com/LukeVideo/simplekanban
     branch: release
     plan: free
-    dockerCommand: docker run lukevideo/okanban-db:latest
+    image:
+      url: docker.io/lukevideo/okanban-db:latest
     envVars:
       - key: POSTGRES_USER
         value: okanban
