@@ -37,8 +37,3 @@ services:
     envVars:
       - key: NGINX_PORT
         value: 80
-      - key: API_HOST
-        fromService:
-          name: okanban-api
-          type: web
-          property: host
