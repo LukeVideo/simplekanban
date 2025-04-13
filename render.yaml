@@ -60,7 +60,7 @@ services:
   - type: pgsql
     name: okanban-db
     plan: free
-    ipAllowList: [] # Internal access only
+    ipAllowList: []
     envVars:
       - key: POSTGRES_USER
         value: okanban
