@@ -29,17 +29,3 @@ services:
         value: 5432
       - key: DEBUG
         value: sequelize:*,okanban:db
-
-  # - type: web
-  #   name: okanban-db
-  #   runtime: image
-  #   plan: free
-  #   image:
-  #     url: docker.io/lukevideo/okanban-db:latest
-  #   envVars:
-  #     - key: POSTGRES_USER
-  #       value: okanban
-  #     - key: POSTGRES_DB
-  #       value: okanban
-  #     - key: POSTGRES_PASSWORD
-  #       sync: false # Set in dashboard
