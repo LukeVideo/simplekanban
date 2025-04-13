@@ -34,7 +34,7 @@ app.use(bodySanitizerMiddleware);
 app.use("/api", router);
 
 // Start server
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 10000;
 const host = "0.0.0.0";
 app.listen(port, host, () => {
   console.log(`🚀 Server listening at http://${host}:${port}`);
