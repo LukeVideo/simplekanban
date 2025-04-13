@@ -44,4 +44,4 @@ services:
         fromService:
           name: okanban-api
           type: web
-          property: port
+          property: PORT
