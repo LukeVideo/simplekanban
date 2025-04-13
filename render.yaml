@@ -1,14 +1,17 @@
 services:
-  - type: web
-    name: okanban-nginx
+  - type: pserv
+    name: okanban-db
     runtime: image
     plan: free
     image:
-      url: docker.io/lukevideo/okanban-nginx:latest
-    healthCheckPath: /
+      url: docker.io/lukevideo/okanban-db:latest
     envVars:
-      - key: NGINX_PORT
-        value: 80
+      - key: POSTGRES_USER
+        value: okanban
+      - key: POSTGRES_DB
+        value: okanban
+      - key: POSTGRES_PASSWORD
+        sync: false
 
   - type: web
     name: okanban-api
@@ -24,17 +27,15 @@ services:
         value: 5432
       - key: DEBUG
         value: sequelize:*,okanban:db
+    startCommand: node index.js
 
-  - type: pserv
-    name: okanban-db
+  - type: web
+    name: okanban-nginx
     runtime: image
     plan: free
     image:
-      url: docker.io/lukevideo/okanban-db:latest
+      url: docker.io/lukevideo/okanban-nginx:latest
+    healthCheckPath: /
     envVars:
-      - key: POSTGRES_USER
-        value: okanban
-      - key: POSTGRES_DB
-        value: okanban
-      - key: POSTGRES_PASSWORD
-        sync: false # Set in dashboard
+      - key: NGINX_PORT
+        value: 80
