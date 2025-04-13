@@ -31,8 +31,6 @@ services:
     plan: free
     image:
       url: docker.io/lukevideo/okanban-db:latest
-    healthCheck:
-      enabled: false
     envVars:
       - key: POSTGRES_USER
         value: okanban
