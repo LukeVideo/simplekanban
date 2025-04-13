@@ -1,3 +1,8 @@
+databases:
+  - name: okanban-db
+    databaseName: okanban
+    user: okanban
+
 services:
   - type: pserv
     name: okanban-db
@@ -27,8 +32,6 @@ services:
           property: connectionString
       - key: NODE_ENV
         value: production
-      - key: DB_PORT
-        value: 5432
       - key: DEBUG
         value: sequelize:*,okanban:db
     startCommand: node index.js
