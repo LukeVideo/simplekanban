@@ -49,3 +49,11 @@ jobs:
           file: ./api/Dockerfile.api
           push: true
           tags: lukevideo/okanban-api:latest
+
+      - name: Build and push okanban-db
+        uses: docker/build-push-action@v6
+        with:
+          context: ./api
+          file: ./api/Dockerfile.database
+          push: true
+          tags: lukevideo/okanban-db:latest

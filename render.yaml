@@ -30,41 +30,24 @@ services:
     dockerCommand: docker run lukevideo/okanban-api:latest
     healthCheckPath: /api/lists
     envVars:
-      - key: DATABASE_URL
-        fromDatabase:
-          name: okanban-db
-          property: connectionString
-      - key: DB_HOST
-        fromDatabase:
-          name: okanban-db
-          property: host
-      - key: DB_USER
-        fromDatabase:
-          name: okanban-db
-          property: user
-      - key: DB_PASSWORD
-        fromDatabase:
-          name: okanban-db
-          property: password
-      - key: DB_NAME
-        fromDatabase:
-          name: okanban-db
-          property: database
-      - key: DB_PORT
-        value: 5432
       - key: NODE_ENV
         value: production
+      - key: DB_PORT
+        value: 5432
       - key: DEBUG
         value: sequelize:*,okanban:db
 
-  - type: pgsql
+  - type: web
     name: okanban-db
+    env: docker
+    repo: https://github.com/LukeVideo/simplekanban
+    branch: release
     plan: free
-    ipAllowList: []
+    dockerCommand: docker run lukevideo/okanban-db:latest
     envVars:
       - key: POSTGRES_USER
         value: okanban
-      - key: POSTGRES_PASSWORD
-        generateValue: true
       - key: POSTGRES_DB
         value: okanban
+      - key: POSTGRES_PASSWORD
+        sync: false # Set in dashboard
