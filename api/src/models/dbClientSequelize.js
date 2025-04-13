@@ -52,7 +52,7 @@ async function initializeDatabase() {
     console.log("Database schema initialized");
 
     // Load and execute populate_tables.sql
-    const populateSqlPath = path.join(__dirname, "..", "data", "populate_tables.sql");
+    const populateSqlPath = path.join(__dirname, "../../data/populate_tables.sql");
     console.log("Attempting to load populate_tables.sql from:", populateSqlPath);
     let populateSql;
     try {
