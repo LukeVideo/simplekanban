@@ -2,15 +2,17 @@ databases:
   - name: okanban-db-managed
     databaseName: okanban
     user: okanban
+    region: oregon
 
 services:
   - type: web
     name: okanban-api
     runtime: image
     plan: free
+    region: oregon
     image:
       url: docker.io/lukevideo/okanban-api:latest
-    healthCheckPath: /api/lists
+    healthCheckPath: /health
     envVars:
       - key: DATABASE_URL
         fromDatabase:
@@ -26,6 +28,7 @@ services:
     name: okanban-nginx
     runtime: image
     plan: free
+    region: oregon
     image:
       url: docker.io/lukevideo/okanban-nginx:latest
     healthCheckPath: /
