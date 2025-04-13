@@ -25,12 +25,14 @@ services:
       - key: DEBUG
         value: sequelize:*,okanban:db
 
-  - type: web
+  - type: pserv
     name: okanban-db
     runtime: image
     plan: free
     image:
       url: docker.io/lukevideo/okanban-db:latest
+    healthCheck:
+      enabled: false
     envVars:
       - key: POSTGRES_USER
         value: okanban
