@@ -2,32 +2,69 @@ services:
   - type: web
     name: okanban-nginx
     env: docker
-    plan: free
-    dockerCommand: docker-compose -f docker-compose.prod.yml up nginx
     repo: https://github.com/LukeVideo/simplekanban
     branch: release
+    plan: free
+    dockerCommand: nginx -g "daemon off;"
     healthCheckPath: /
+    envVars:
+      - key: NGINX_PORT
+        value: 80
+    disk:
+      name: nginx-data
+      mountPath: /usr/share/nginx/html
+      mountPathExtra:
+        - source: ./client/dist
+          target: /usr/share/nginx/html
+          readOnly: true
+        - source: ./nginx.conf
+          target: /etc/nginx/nginx.conf
+          readOnly: true
 
-  - type: pserv
+  - type: web
     name: okanban-api
     env: docker
-    plan: free
-    dockerCommand: docker-compose -f docker-compose.prod.yml up api
     repo: https://github.com/LukeVideo/simplekanban
     branch: release
-
-  - type: pserv
-    name: okanban-client
-    env: docker
     plan: free
-    dockerCommand: docker-compose -f docker-compose.prod.yml up client
-    repo: https://github.com/LukeVideo/simplekanban
-    branch: release
+    dockerCommand: docker run lukevideo/okanban-api:latest
+    healthCheckPath: /api/lists
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: okanban-db
+          property: connectionString
+      - key: DB_HOST
+        fromDatabase:
+          name: okanban-db
+          property: host
+      - key: DB_USER
+        fromDatabase:
+          name: okanban-db
+          property: user
+      - key: DB_PASSWORD
+        fromDatabase:
+          name: okanban-db
+          property: password
+      - key: DB_NAME
+        fromDatabase:
+          name: okanban-db
+          property: database
+      - key: DB_PORT
+        value: 5432
+      - key: NODE_ENV
+        value: production
+      - key: DEBUG
+        value: sequelize:*,okanban:db
 
-  - type: pserv
+  - type: pgsql
     name: okanban-db
-    env: docker
     plan: free
-    dockerCommand: docker-compose -f docker-compose.prod.yml up db
-    repo: https://github.com/LukeVideo/simplekanban
-    branch: release
+    ipAllowList: [] # Internal access only
+    envVars:
+      - key: POSTGRES_USER
+        value: okanban
+      - key: POSTGRES_PASSWORD
+        generateValue: true
+      - key: POSTGRES_DB
+        value: okanban

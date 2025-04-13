@@ -11,7 +11,14 @@ import { bodySanitizerMiddleware } from "./src/middlewares/body-sanitizer.js";
 const app = express();
 
 // Authorize CORS requests 
-app.use(cors(process.env.ALLOWED_DOMAINS || "*")); // * = tous les domaines (pour nous faciliter la vie sur la saison future, mais en pratique, on devrait limiter l'accès à notre API uniquement au front qui va nous appeler !)
+// app.use(cors(process.env.ALLOWED_DOMAINS || "*")); // * = tous les domaines (pour nous faciliter la vie sur la saison future, mais en pratique, on devrait limiter l'accès à notre API uniquement au front qui va nous appeler !)
+
+app.use(cors({
+  origin: ['https://okanban-nginx.onrender.com', 'http://localhost:4173'], // Update with your domain
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  allowedHeaders: ['Content-Type', 'Authorization']
+}));
+
 
 // Disable x-powered-by Express header // => ne pas leak des informations sur notre stack technique
 app.disable('x-powered-by');
