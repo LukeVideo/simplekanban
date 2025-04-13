@@ -1,1 +1,43 @@
-uild new ones on Rend
+uild new ones on Rendservices:
+  - type: web
+    name: okanban-nginx
+    env: docker
+    repo: https://github.com/LukeVideo/simplekanban
+    branch: release
+    plan: free
+    dockerCommand: docker run lukevideo/okanban-nginx:latest
+    healthCheckPath: /
+    envVars:
+      - key: NGINX_PORT
+        value: 80
+
+  - type: web
+    name: okanban-api
+    env: docker
+    repo: https://github.com/LukeVideo/simplekanban
+    branch: release
+    plan: free
+    dockerCommand: docker run lukevideo/okanban-api:latest
+    healthCheckPath: /api/lists
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: DB_PORT
+        value: 5432
+      - key: DEBUG
+        value: sequelize:*,okanban:db
+
+  - type: web
+    name: okanban-db
+    env: docker
+    repo: https://github.com/LukeVideo/simplekanban
+    branch: release
+    plan: free
+    dockerCommand: docker run lukevideo/okanban-db:latest
+    envVars:
+      - key: POSTGRES_USER
+        value: okanban
+      - key: POSTGRES_DB
+        value: okanban
+      - key: POSTGRES_PASSWORD
+        sync: false # Set in dashboard
