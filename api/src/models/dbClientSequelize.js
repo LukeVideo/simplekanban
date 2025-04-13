@@ -1,6 +1,11 @@
 import "dotenv/config";
 import { Sequelize } from "sequelize";
 
+if (!process.env.DATABASE_URL) {
+  console.error("ERROR: DATABASE_URL is not defined");
+  process.exit(1);
+}
+
 export const sequelize = new Sequelize(process.env.DATABASE_URL, {
   dialect: "postgres",
   define: {
