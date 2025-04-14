@@ -1,7 +1,7 @@
 # Global settings
 worker_processes auto;
 
-# Events block (fixes "no events section" error)
+# Events block
 events {
     worker_connections 1024;
 }
