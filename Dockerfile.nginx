@@ -4,7 +4,7 @@ FROM nginx:latest
 COPY nginx.conf.template /etc/nginx/nginx.conf.template
 
 # Copy static frontend files (adjust path if needed)
-COPY html /usr/share/nginx/html
+COPY client/dist /usr/share/nginx/html
 
 # Expose port 80
 EXPOSE 80
