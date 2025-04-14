@@ -4,7 +4,7 @@ import cors from "cors";
 import { router } from "./src/router.js";
 import { bodySanitizerMiddleware } from "./src/middlewares/body-sanitizer.js";
 import http from "http";
-import { sequelize } from "./src/model/dbClientSequelize.js"; // Add this line
+import { sequelize } from "./src/models/dbClientSequelize.js"; 
 
 const app = express();
 
