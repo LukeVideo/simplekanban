@@ -18,8 +18,15 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(bodySanitizerMiddleware);
 
-app.get("/health", (req, res) => {
-  res.status(200).json({ status: "ok" });
+app.get("/health", async (req, res) => {
+  try {
+    const { sequelize } = require("./model/dbClientSequelize.js");
+    await sequelize.authenticate();
+    res.status(200).json({ status: "ok", db: "connected" });
+  } catch (error) {
+    console.error("Health check failed:", error);
+    res.status(500).json({ status: "error", error: "DB connection failed" });
+  }
 });
 
 app.use("/api", router);
