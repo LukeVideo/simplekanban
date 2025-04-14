@@ -1,7 +1,5 @@
 FROM nginx:latest
 
-FROM nginx:latest
-
 # Copy the static Nginx configuration
 COPY nginx.conf /etc/nginx/nginx.conf
 
