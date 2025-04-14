@@ -1,40 +1,19 @@
 worker_processes auto;
-
 events {
     worker_connections 1024;
 }
-
 http {
     include mime.types;
     default_type application/octet-stream;
-
-    upstream api_backend {
-        server ${API_HOST}:443;
-        keepalive 32;
-    }
-
     server {
         listen 80;
         server_name localhost;
-
         location / {
             root /usr/share/nginx/html;
             try_files $uri $uri/ /index.html;
         }
-
-        location /health {
-            proxy_pass https://api_backend/health;
-            proxy_set_header Host ${API_HOST};
-            proxy_set_header X-Real-IP $remote_addr;
-            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-            proxy_set_header X-Forwarded-Proto $scheme;
-            proxy_ssl_verify off;
-            proxy_connect_timeout 30s;
-            proxy_read_timeout 30s;
-        }
-
         location /api/ {
-            proxy_pass https://api_backend/api/;
+            proxy_pass [invalid url, do not cite]
             proxy_set_header Host ${API_HOST};
             proxy_set_header X-Real-IP $remote_addr;
             proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
@@ -42,18 +21,6 @@ http {
             proxy_ssl_verify off;
             proxy_connect_timeout 30s;
             proxy_read_timeout 30s;
-
-            add_header Access-Control-Allow-Origin "*";
-            add_header Access-Control-Allow-Methods "GET, POST, OPTIONS, PUT, DELETE";
-            add_header Access-Control-Allow-Headers "Content-Type, Authorization, Accept";
-
-            if ($request_method = 'OPTIONS') {
-                add_header Access-Control-Allow-Origin "*";
-                add_header Access-Control-Allow-Methods "GET, POST, OPTIONS, PUT, DELETE";
-                add_header Access-Control-Allow-Headers "Content-Type, Authorization, Accept";
-                add_header Content-Length 0;
-                return 204;
-            }
         }
     }
 }
