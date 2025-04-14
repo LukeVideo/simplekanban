@@ -4,6 +4,7 @@ import cors from "cors";
 import { router } from "./src/router.js";
 import { bodySanitizerMiddleware } from "./src/middlewares/body-sanitizer.js";
 import http from "http";
+import { sequelize } from "./src/model/dbClientSequelize.js"; // Add this line
 
 const app = express();
 
@@ -20,7 +21,6 @@ app.use(bodySanitizerMiddleware);
 
 app.get("/health", async (req, res) => {
   try {
-    const { sequelize } = require("./model/dbClientSequelize.js");
     await sequelize.authenticate();
     res.status(200).json({ status: "ok", db: "connected" });
   } catch (error) {
