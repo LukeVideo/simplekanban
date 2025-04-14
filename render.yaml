@@ -37,3 +37,5 @@ services:
     envVars:
       - key: NGINX_PORT
         value: 80
+      - key: API_HOST
+        value: okanban-api-tnt9.onrender.com
